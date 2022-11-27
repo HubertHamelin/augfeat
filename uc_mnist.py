@@ -4,23 +4,20 @@ import numpy as np
 from tqdm import tqdm
 from matplotlib import pyplot as plt
 from balancer import Balancer
-from config import DataTypes, AUTOENCODER_TRAINING_CONFIG_LIGHT, AUTOENCODER_TRAINING_CONFIG_MEDIUM
+from config import DataTypes
 import tensorflow as tf
 
-train_images_path = '../Experiments/train-images.idx3-ubyte'
-train_labels_path = '../Experiments/train-labels.idx1-ubyte'
-train_images = idx2numpy.convert_from_file(train_images_path)
-train_labels = idx2numpy.convert_from_file(train_labels_path)
 
+def format_data() -> None:
+    """
+    Format the MNIST data as expected by the AugFeat lib (see README for more details)
+    :return: None
+    """
+    train_images_path = '../Experiments/train-images.idx3-ubyte'
+    train_labels_path = '../Experiments/train-labels.idx1-ubyte'
+    train_images = idx2numpy.convert_from_file(train_images_path)
+    train_labels = idx2numpy.convert_from_file(train_labels_path)
 
-# Example image
-def example_image():
-    plt.imshow(train_images[4], cmap=plt.cm.binary)
-    plt.show()
-
-
-# Format the data as expected by the AugFeat lib
-def format_data():
     os.mkdir('../Experiments/train')
     for i in range(10):
         os.mkdir(f'../Experiments/train/{i}')
@@ -30,40 +27,33 @@ def format_data():
         np.save(f'../Experiments/train/{label}/{label}_{j}.npy', image)
         j += 1
 
-"""
-with tf.device('cpu:0'):
-    # Balancer Class test
-    dataset_path = '../Experiments/train'
-    balancer = Balancer(dataset_path, DataTypes.NUMPY)
-    balancer.augment_class('5', 10, AUTOENCODER_TRAINING_CONFIG_MEDIUM)
-"""
 
-# Results visualisation
-class_name = '5'
-augmented_path = f'../Experiments/augmented_dataset/{class_name}'
-fig, axs = plt.subplots(3, 3)
-for file_name, ax in zip(os.listdir(augmented_path), axs.flat):
-    array = np.load(os.path.join(augmented_path, file_name))
-    ax.imshow(array, cmap=plt.cm.binary)
+autoencoder_config = {
+    'latent_dim': 128,
+    'dropout_rate': 0.2,
+    'epochs': 200,
+    'batch_size': 128,
+    'learning_rate': 1e-3
+}
+
+# Results visualisation : 3x10 : 3 classes with 10 examples of each
+dataset_path = '../Experiments/train'
+augmentation_target = 10
+balancer = Balancer(dataset_path, DataTypes.NUMPY)
+classes = ['1', '2', '3']
+
+for class_name in classes:
+    with tf.device('cpu:0'):
+        balancer.augment_class(class_name, augmentation_target, autoencoder_config)
+
+fig, axs = plt.subplots(3, 10)
+cursor = 0
+for class_name in classes:
+    augmented_path = f'../Experiments/augmented_dataset/{class_name}'
+    for file_name, ax in zip(os.listdir(augmented_path), axs.flat[cursor:]):
+        array = np.load(os.path.join(augmented_path, file_name))
+        ax.imshow(array, cmap=plt.cm.binary)
+        ax.axis('off')
+    cursor += len(os.listdir(augmented_path))
+
 plt.show()
-
-
-# Test the reconstruction of original data using the trained autoencoder (visualize the evaluation in a grid).
-"""
-inputs = balancer.dataset['9']
-test_autoencoder = AutoEncoder(inputs, balancer.timesteps, balancer.n_features, AUTOENCODER_TRAINING_CONFIG_LIGHT)
-test_autoencoder.train()
-test_autoencoder.evaluate()
-
-for img in inputs[:1]:
-    reconstructed = test_autoencoder.autoencoder.predict(np.array([test_autoencoder.scale(img)]))
-    reconstructed = test_autoencoder.reverse_scale(reconstructed[0])
-
-    img = balancer.dataset_interface.reverse_transform_numpy_data_to_numpy(img.squeeze())
-    reconstructed = balancer.dataset_interface.reverse_transform_numpy_data_to_numpy(reconstructed.squeeze())
-
-    plt.imshow(img, cmap=plt.cm.binary)
-    plt.show()
-    plt.imshow(reconstructed, cmap=plt.cm.binary)
-    plt.show()
-"""
