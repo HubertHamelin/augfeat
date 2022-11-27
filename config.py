@@ -15,21 +15,21 @@ high -> test performance
 AUTOENCODER_TRAINING_CONFIG_LIGHT = {
     'latent_dim': 32,
     'dropout_rate': 0.2,
-    'epochs': 200,
-    'batch_size': 128,
+    'epochs': 3,
+    'batch_size': 32,
     'learning_rate': 1e-3
 }
 
 AUTOENCODER_TRAINING_CONFIG_MEDIUM = {
-    'latent_dim': 32,
+    'latent_dim': 128,
     'dropout_rate': 0.2,
-    'epochs': 300,
-    'batch_size': 128,
+    'epochs': 500,
+    'batch_size': 64,
     'learning_rate': 1e-3
 }
 
 AUTOENCODER_TRAINING_CONFIG_HIGH = {
-    'latent_dim': 64,
+    'latent_dim': 256,
     'dropout_rate': 0.2,
     'epochs': 1000,
     'batch_size': 128,
