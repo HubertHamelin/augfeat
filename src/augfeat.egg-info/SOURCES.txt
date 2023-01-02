@@ -1,0 +1,13 @@
+LICENSE
+README.md
+pyproject.toml
+src/augfeat/autoencoder.py
+src/augfeat/balancer.py
+src/augfeat/config.py
+src/augfeat/custom_data_type_interface.py
+src/augfeat/custom_types.py
+src/augfeat.egg-info/PKG-INFO
+src/augfeat.egg-info/SOURCES.txt
+src/augfeat.egg-info/dependency_links.txt
+src/augfeat.egg-info/requires.txt
+src/augfeat.egg-info/top_level.txt
