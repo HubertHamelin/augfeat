@@ -51,6 +51,7 @@ Extend formats handled by the library:
 - 3D numpy matrices and higher dimensions.
 - Images (png)
 - Dataframes (within restrictive conditions)
+- Add CPU and GPU execution mode options
 
 ## Contributing
 
