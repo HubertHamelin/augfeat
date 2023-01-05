@@ -9,7 +9,8 @@ AUTOENCODER_TRAINING_CONFIG_LIGHT = {
     'dropout_rate': 0.2,
     'epochs': 3,
     'batch_size': 32,
-    'learning_rate': 1e-3
+    'learning_rate': 1e-3,
+    'reconstruction_limit_factor': 1
 }
 
 AUTOENCODER_TRAINING_CONFIG_MEDIUM = {
@@ -17,7 +18,8 @@ AUTOENCODER_TRAINING_CONFIG_MEDIUM = {
     'dropout_rate': 0.2,
     'epochs': 500,
     'batch_size': 64,
-    'learning_rate': 1e-3
+    'learning_rate': 1e-3,
+    'reconstruction_limit_factor': 0.5
 }
 
 AUTOENCODER_TRAINING_CONFIG_HIGH = {
@@ -25,5 +27,6 @@ AUTOENCODER_TRAINING_CONFIG_HIGH = {
     'dropout_rate': 0.2,
     'epochs': 1000,
     'batch_size': 128,
-    'learning_rate': 1e-3
+    'learning_rate': 1e-3,
+    'reconstruction_limit_factor': 0.25
 }

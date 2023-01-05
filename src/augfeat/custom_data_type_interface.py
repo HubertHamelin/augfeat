@@ -2,12 +2,11 @@ from abc import ABC, abstractmethod
 import numpy as np
 
 
-# TODO: Comment every methods
-# expected types: numpy arrays, images, pandas Dataframes
-# TODO: explain for each expected type the format_ meaning
-
-
 class CustomDataTypeInterface(ABC):
+    """
+    The point of this interface is to free the Balancer class from managing the data. The Balancer class will work
+    with instances of subclasses implementing this interface, and the subclasses will take care of data compatibility.
+    """
 
     path: str
     shape: tuple
@@ -33,5 +32,5 @@ class CustomDataTypeInterface(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def plot(self, shape: tuple) -> None:
+    def transform_to_numpy(self, target_shape: tuple) -> np.array:
         raise NotImplementedError

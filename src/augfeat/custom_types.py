@@ -12,8 +12,6 @@ class DataTypes(Enum):
     NUMPY = '.npy'
 
 
-# TODO: add comments to raised errors
-
 class CustomTypeNumpy(CustomDataTypeInterface):
 
     def __init__(self, path: str):
@@ -36,19 +34,12 @@ class CustomTypeNumpy(CustomDataTypeInterface):
     def save(self, element: np.array) -> None:
         np.save(self.path, element)
 
-    def transform_to_numpy(self, target_shape: tuple) -> None:
+    def transform_to_numpy(self, target_shape: tuple) -> np.array:
         pass
 
     def reverse_transform(self, vector: np.array) -> np.array:
         element = vector
         return element
-
-    def plot(self, shape: tuple) -> None:
-        # if dim=1: plot curve
-        # if dim=2: plot grayscale image
-        # if dim=(x,y,3): plot RGB image
-        # if dim >=4: unable to plot
-        pass
 
 
 class CustomClass:
