@@ -17,7 +17,7 @@ The dataset on which you want to perform data augmentation operations has to res
 - All classes are in a single main directory, its name has no importance.
 - Each class has its own directory inside the main directory, named with the class name.
 - All elements of a class are inside the corresponding class directory, names have no importance.
-- Version 0.1 (first release) only handles numpy datasets.
+- Version 1.0.0 (first release) only handles numpy datasets.
 - All elements of a single class must have the exact same shapes, which means no missing data.
 
 ### How to use it
@@ -44,7 +44,8 @@ Newly created elements will be saved on disk each time the augment_class method 
 is up to your expectations, you can choose  to merge the augmented elements with your original data, or keep them 
 separated.
 
-Here are examples of results obtained respectively for the MNIST dataset and the UJI Pen Characters dataset.
+Examples of results obtained respectively for the MNIST dataset and the UJI Pen Characters dataset are in the tests 
+folder.
 
 
 ### Configuration details
